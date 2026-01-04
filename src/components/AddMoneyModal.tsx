@@ -19,7 +19,8 @@ export const AddMoneyModal: React.FC<{
 
   const coinCount = useMemo(() => {
     const byValue = Math.floor(amount / 100); // 1 coin ~= $1
-    return Math.max(6, Math.min(24, byValue));
+    console.log("+++++++++ coinCount", byValue);
+    return Math.min(20, byValue + 10);
   }, [amount]);
 
   const positions = useRef({ sx: 40, sy: 140, bx: 320, by: 120 });
@@ -52,7 +53,6 @@ export const AddMoneyModal: React.FC<{
 
     setTimeout(handleClose, 300);
   };
-  const capLength = Math.min(coinCount + 10, 20);
 
   return (
     <AnimatePresence>
@@ -101,9 +101,6 @@ export const AddMoneyModal: React.FC<{
                     <AddSvg /> Add
                   </button>
                 </div>
-                {/* <p className="text-xs text-slate-500">
-                  We’ll drop coins into the bank
-                </p> */}
               </div>
             )}
 
@@ -115,9 +112,10 @@ export const AddMoneyModal: React.FC<{
                   className="absolute left-4 bottom-4 w-20 h-28 flex  gap-4 items-end justify-center"
                 >
                   {/* Stack of coin */}
-                  {Array.from({ length: capLength }).map((_, i) => {
-                    const posY = capLength * 2.5 - i * 2.5 - i;
-                    if (i > 10) {
+                  {Array.from({ length: coinCount }).map((_, i) => {
+                    const posY = coinCount * 2.5 - i * 2.5 - i;
+                    if (i > 9) {
+                      console.log("++++++++ render animated coin", i);
                       return (
                         <CoinSvg
                           key={i}
@@ -137,15 +135,15 @@ export const AddMoneyModal: React.FC<{
                           transition={{
                             duration: 0.7,
                             times: [0, 0.7, 0.9, 1],
-                            delay: (capLength - i) * 0.08,
+                            delay: (coinCount - i) * 0.08,
                             ease: "easeInOut",
                           }}
                           onAnimationComplete={
-                            i === capLength - 1
+                            i === coinCount - 1
                               ? () =>
                                   setTimeout(
                                     handleLastCoinArrived,
-                                    capLength * 20
+                                    coinCount * 20
                                   )
                               : undefined
                           }
