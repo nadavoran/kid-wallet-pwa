@@ -82,20 +82,28 @@ export const AddMoneyModal: React.FC<{
                   <input
                     type="number"
                     className="w-full border rounded-lg p-2"
-                    value={amount / 100}
-                    onChange={(e) =>
-                      setAmount(
-                        Math.max(0, Math.round(Number(e.target.value) * 100))
-                      )
-                    }
+                    value={amount === 0 ? "" : amount / 100}
+                    placeholder="0"
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === "") {
+                        setAmount(0);
+                      } else {
+                        setAmount(Math.max(0, Math.round(Number(value) * 100)));
+                      }
+                    }}
                   />
-                  <button className="btn btn-accent w-full" onClick={beginFly}>
+                  <button
+                    className="btn btn-accent w-full"
+                    onClick={beginFly}
+                    disabled={amount === 0}
+                  >
                     <AddSvg /> Add
                   </button>
                 </div>
-                <p className="text-xs text-slate-500">
-                  We’ll drop {coinCount} coins into the bank
-                </p>
+                {/* <p className="text-xs text-slate-500">
+                  We’ll drop coins into the bank
+                </p> */}
               </div>
             )}
 

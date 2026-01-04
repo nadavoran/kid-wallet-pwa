@@ -42,9 +42,7 @@ const Inner: React.FC = () => {
             <div className="w-12 h-12 rounded-full bg-sky-500 text-white flex items-center justify-center">
               <AddSvg />
             </div>
-            <span className="text-sm font-medium text-slate-700">
-              Add Money
-            </span>
+            <span className="text-sm font-medium text-slate-700">Add</span>
           </button>
 
           <button
